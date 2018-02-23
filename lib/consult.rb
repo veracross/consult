@@ -81,7 +81,7 @@ module Consult
       ENV['CONSUL_HTTP_TOKEN'] ||
         @config[:consul].delete(:token) ||
         @config[:consul][:acl_token] ||
-        CONSUL_DISK_TOKEN.read.chomp
+        (CONSUL_DISK_TOKEN.exist? ? CONSUL_DISK_TOKEN.read.chomp : nil)
     end
   end
 end
