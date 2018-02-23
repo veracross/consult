@@ -1,5 +1,9 @@
 # Consult
 
+[![Gem Version](https://badge.fury.io/rb/consult.svg)](https://badge.fury.io/rb/consult)
+[![Build Status](https://travis-ci.org/veracross/consult.svg?branch=master)](https://travis-ci.org/veracross/consult)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d7b048b7edd9f27c83b9/maintainability)](https://codeclimate.com/github/veracross/consult/maintainability)
+
 Render configuration and secrets from [Consul] and [Vault] with ERB templates.
 
 This gem is a spiritual sibling to [Consul Template], but specifically intended for use in Ruby or Rails environments. It does not have the same features as Consul Template; it is intended for simpler scenarios. Most importantly, leases and configuration changes are _not_ watched to automatically re-render. Consult is intended for more static or medium-to-long lived configuration.
