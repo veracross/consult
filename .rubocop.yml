@@ -1,0 +1,34 @@
+AllCops:
+  TargetRubyVersion: 2.4
+
+Metrics/LineLength:
+  Max: 117
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/ClassLength:
+  Max: 400
+
+Metrics/AbcSize:
+  Max: 30
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'test/**/*_test.rb'
+    - '*.gemspec'
+    - 'Gemfile'
+    - 'Guardfile'
+
+# Reserve space for blocks to visually distinguish blocks from hashes
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+# use 'raise' instead of 'fail'
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+# mixed: Use slashes on single-line regexes, and %r on multi-line regexes.
+Style/RegexpLiteral:
+  EnforcedStyle: mixed

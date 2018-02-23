@@ -1,0 +1,20 @@
+# rendered at <%= timestamp %>
+common: &common
+  appname: Rails
+  adapter: postgres
+  timeout: 10000
+  login_timeout: 5
+  pool: 10
+
+# Begin template
+<% service("postgres").each do |node| %>
+'<%= node.Node %>':
+  <<: *common
+  host: <%= node.Address %>
+  port: <%= node.ServicePort %>
+  <%- with secret "secret/database_credentials" do |s| -%>
+  # Lease good until <%= (timestamp + s.lease_duration).to_s %>
+  username: <%= s.data[:username] %>
+  password: <%= s.data[:password] %>
+  <% end -%>
+<% end %>
