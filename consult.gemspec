@@ -25,8 +25,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'activesupport', '> 4', '< 6'
-  spec.add_dependency 'diplomat'
-  spec.add_dependency 'vault'
+  spec.add_dependency 'diplomat', '~> 2.0.2'
+  spec.add_dependency 'vault', '~> 0.9.0'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'byebug'
