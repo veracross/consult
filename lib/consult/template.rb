@@ -34,7 +34,7 @@ module Consult
     end
 
     def should_render?
-      (@config[:environments] == 'all' || @config[:environments].include?(Consult.env)) && expired?
+      (@config[:environments] == 'all' || [@config[:environments]].flatten.include?(Consult.env)) && expired?
     end
 
     def expired?
