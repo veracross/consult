@@ -139,6 +139,10 @@ returns
 
 **secret(path)** - Fetch a secret at the given path.
 
+    # Vault KV v2
+    username: <%= secret('secret/data/credentials').data.dig(:data, :username) %>
+
+    # Vault KV v1
     username: <%= secret('secret/credentials').data[:username] %>
 
 yields
@@ -273,8 +277,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Testing is easiest by running Consul and Vault in Docker. Just boot up their minimal containers:
 
-    $ docker run -d --name=dev-consul -p 8500:8500 consul
-    $ docker run -d --name=dev-vault -p 8200:8200 --cap-add=IPC_LOCK -e 'VAULT_DEV_ROOT_TOKEN_ID=94e1a9ed-5d72-5677-27ab-ebc485cca368' vault
+    $ docker-compose up
 
 Then run `bundle exec rspec`, or `bundle exec guard`.
 
