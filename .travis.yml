@@ -10,4 +10,6 @@ services:
 
 before_install:
   - gem install bundler -v 1.16.2
-  - docker-compose start
+  - docker-compose --version
+  - docker-compose up -d
+  - docker ps
