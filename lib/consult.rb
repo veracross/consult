@@ -25,7 +25,7 @@ module Consult
       yaml = root.join('config', 'consult.yml')
       @config = yaml.exist? ? YAML.safe_load(ERB.new(yaml.read).result, [], [], true) : {}
       @config.deep_symbolize_keys!
-      @templates = @config[:templates]&.map { |name, config| Template.new(name, config) }
+      @templates = @config[:templates]&.map { |name, config| Template.new(name, config) } || []
 
       configure_consul
       configure_vault
