@@ -44,7 +44,7 @@ RSpec.describe Consult::Template do
 
   context 'template functions' do
     it 'can read a secret from vault' do
-      expect(template.secret('secret/database_credentials').data[:username]).to eq 'kylo.ren'
+      expect(template.secret('secret/data/database_credentials').data.dig(:data, :username)).to eq 'kylo.ren'
     end
 
     it 'can list secrets' do

@@ -5,7 +5,6 @@ curl \
 
 curl \
     -H "X-Vault-Token: 94e1a9ed-5d72-5677-27ab-ebc485cca368" \
-    -H "Content-Type: application/json" \
     -X POST \
-    -d '{"username":"kylo.ren", "password":"v4d3r_4eva"}' \
-    http://127.0.0.1:8200/v1/secret/database_credentials
+    --data @spec/support/vault-test-data.json \
+    http://127.0.0.1:8200/v1/secret/data/database_credentials

@@ -12,9 +12,9 @@ common: &common
   <<: *common
   host: <%= node.Address %>
   port: <%= node.ServicePort %>
-  <%- with secret "secret/database_credentials" do |s| -%>
+  <%- with secret "secret/data/database_credentials" do |s| -%>
   # Lease good until <%= (timestamp + s.lease_duration).to_s %>
-  username: <%= s.data[:username] %>
-  password: <%= s.data[:password] %>
+  username: <%= s.data.dig(:data, :username) %>
+  password: <%= s.data.dig(:data, :password) %>
   <% end -%>
 <% end %>
