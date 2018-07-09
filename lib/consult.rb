@@ -58,11 +58,11 @@ module Consult
     end
 
     def root(directory: nil)
-      @_root ||= directory ? Pathname.new(directory) : (!!defined?(Rails) && ::Rails.root)
+      @_root ||= directory ? Pathname.new(directory) : (defined?(::Rails) && ::Rails.root)
     end
 
     def env
-      @config[:env] || ENV['RAILS_ENV'] || Rails.env
+      @config[:env] || ENV['RAILS_ENV'] || (defined?(::Rails) && ::Rails.root)
     end
 
     # Return only the templates that are relevant for the current environment
