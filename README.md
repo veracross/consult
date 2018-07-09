@@ -59,24 +59,24 @@ vault:
 # Enumerate the templates.
 templates:
   database:
-    # Relative paths are assumed to be in #{Rails.root}/config.
+    # Relative paths are assumed to be in #{Rails.root}.
     # Path to the template
-    path: templates/database.yml.erb
+    path: config/templates/database.yml.erb
     # Destination for the rendered template
-    dest: rendered/database.yml
+    dest: config/database.yml
     # Which environments to render this template in
     environments: all
     # If the file is less than this old, do not re-render
     ttl: 3600 # seconds
 
   secrets:
-    path: templates/secrets.yml.erb
-    dest: rendered/secrets.yml
+    path: config/templates/secrets.yml.erb
+    dest: config/secrets.yml
     environments: test
 
   should_be_excluded:
-    path: templates/fake.yml.erb
-    dest: rendered/fake.yml
+    path: config/templates/fake.yml.erb
+    dest: config/fake.yml
     environments: production # won't be rendered because it doesn't match `env` at the top
 ```
 
