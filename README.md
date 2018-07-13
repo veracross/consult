@@ -43,49 +43,59 @@ If this gem is included in a Rails, the templates will render on Rails boot. Con
 ### Configuration
 
 ```yaml
-# The environment you are operating it. Defaults to ENV['RAILS_ENV'] or Rails.env if Rails is present.
+# Optional; Consult will render this specific environment, if set
+# Defaults to ENV['RAILS_ENV'] or Rails.env if Rails is present
 env: test
 
-# Optional
-consul:
-  # Prefers `CONSUL_HTTP_ADDR` environment variable
-  address: http://0.0.0.0:8500
-  # Prefers `CONSUL_HTTP_TOKEN` environment variable, or a ~/.consul-token file.
-  # Setting a token here is not best practice because consul tokens should have a relatively short TTL
-  # and be read from the environment, but this is convenient for testing.
-  token: 5d3f1c66-d405-4ad1-b634-ea30be4fb539
+# "shared" is the base configuration used for all environments by default
+# note: you do NOT need to use yaml merge syntax to have shared configuration included for specific environments
+shared:
+  # Optional
+  consul:
+    # Prefers `CONSUL_HTTP_ADDR` environment variable
+    address: http://0.0.0.0:8500
+    # Prefers `CONSUL_HTTP_TOKEN` environment variable, or a ~/.consul-token file.
+    # Setting a token here is not best practice because consul tokens should have a relatively short TTL
+    # and be read from the environment, but this is convenient for testing.
+    token: 5d3f1c66-d405-4ad1-b634-ea30be4fb539
 
-# Optional
-vault:
-  # Prefers `VAULT_ADDR` environment variable
-  address: http://0.0.0.0:8200
-  # Prefers `VAULT_TOKEN` environment variable, or a ~/.vault-token file
-  # Setting a token here is not best practice because vault tokens should have a relatively short TTL
-  # and be read from the environment, but this is convenient for testing.
-  token: 8fcd5aed-3eb9-412d-8923-1397af7aede2
+  # Optional
+  vault:
+    # Prefers `VAULT_ADDR` environment variable
+    address: http://0.0.0.0:8200
+    # Prefers `VAULT_TOKEN` environment variable, or a ~/.vault-token file
+    # Setting a token here is not best practice because vault tokens should have a relatively short TTL
+    # and be read from the environment, but this is convenient for testing.
+    token: 8fcd5aed-3eb9-412d-8923-1397af7aede2
 
-# Enumerate the templates.
-templates:
-  database:
-    # Relative paths are assumed to be in #{Rails.root}.
-    # Path to the template
-    path: config/templates/database.yml.erb
-    # Destination for the rendered template
-    dest: config/database.yml
-    # Which environments to render this template in
-    environments: all
-    # If the file is less than this old, do not re-render
-    ttl: 3600 # seconds
+  # Enumerate the templates.
+  templates:
+    database:
+      # Relative paths are assumed to be in #{Rails.root}.
+      # Path to the template
+      path: config/templates/database.yml.erb
+      # Destination for the rendered template
+      dest: config/database.yml
+      # If the file is less than this old, do not re-render
+      ttl: 3600 # seconds
 
-  secrets:
-    path: config/templates/secrets.yml.erb
-    dest: config/secrets.yml
-    environments: test
+# environment specific configuration
+# NOTE: environment keys will be deep merged with the "shared" configuration
+test:
+  templates:
+    secrets:
+      path: config/templates/secrets.yml.erb
+      dest: config/secrets.yml
 
-  should_be_excluded:
-    path: config/templates/fake.yml.erb
-    dest: config/fake.yml
-    environments: production # won't be rendered because it doesn't match `env` at the top
+production:
+  # example: override vault token in production
+  vault:
+    token: 1397af7aede2-8923-412d-3eb9-8fcd5aed
+  templates:
+    # excluded from non-production environments
+    should_be_excluded:
+      path: config/templates/fake.yml.erb
+      dest: config/fake.yml
 ```
 
 ### Templates

@@ -6,7 +6,6 @@ RSpec.describe Consult::Template do
     {
       path: 'templates/database.yml.erb',
       dest: 'rendered/database.yml',
-      environments: 'all',
       ttl: 2
     }
   end
