@@ -23,8 +23,11 @@ module Consult
     def load(config_dir: nil)
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
-      @config = yaml.exist? ? YAML.safe_load(ERB.new(yaml.read).result, [], [], true) : {}
-      @config.deep_symbolize_keys!
+
+      @all_config = yaml.exist? ? YAML.safe_load(ERB.new(yaml.read).result, [], [], true).to_h : {}
+      @all_config.deep_symbolize_keys!
+
+      @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
       @templates = @config[:templates]&.map { |name, config| Template.new(name, config) } || []
 
       configure_consul
@@ -62,7 +65,7 @@ module Consult
     end
 
     def env
-      @config[:env] || ENV['RAILS_ENV'] || (defined?(::Rails) && ::Rails.root)
+      @all_config[:env] || ENV['RAILS_ENV'] || (defined?(::Rails) && ::Rails.root)
     end
 
     # Return only the templates that are relevant for the current environment
