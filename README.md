@@ -73,7 +73,7 @@ shared:
     database:
       # Relative paths are assumed to be in #{Rails.root}.
       # Path to the template
-      path: config/templates/database.yml.erb
+      path: config/templates/database.yml
       # Destination for the rendered template
       dest: config/database.yml
       # If the file is less than this old, do not re-render
@@ -84,7 +84,7 @@ shared:
 test:
   templates:
     secrets:
-      path: config/templates/secrets.yml.erb
+      path: config/templates/secrets.yml
       dest: config/secrets.yml
 
 production:
@@ -94,13 +94,13 @@ production:
   templates:
     # excluded from non-production environments
     should_be_excluded:
-      path: config/templates/fake.yml.erb
+      path: config/templates/fake.yml
       dest: config/fake.yml
 ```
 
 ### Templates
 
-Templates are ERB files, and as such can do anything ERB can do. However, Consult does provide a few helper functions.
+Templates files are processed with ERB. As such, they can do anything ERB can do. Consult also provides a few helper functions.
 
 Note that under the hood, Consult is using [Diplomat](https://github.com/WeAreFarmGeek/diplomat) and the [Vault Gem](https://github.com/hashicorp/vault-ruby). Consul objects are therefore Diplomat objects, and likewise Vault objects are Vault Gem objects. See their API docs for more information. Diplomat generally returns structs with title cased properties.
 
@@ -220,7 +220,7 @@ password: <%= s.data[:password] %>
 Render multiple servers into a `database.yml` file, keyed by their name.
 
 ```yml
-# database.yml.erb
+# database.yml
 <% service("postgres").each do |node| %>
 '<%= node.Node %>':
   host: <%= node.Address %>
@@ -254,7 +254,7 @@ Yields something like
 #### Secrets
 
 ```yml
-# secrets.yml.erb
+# secrets.yml
 shared:
   rollbar_token: <%= secret('secrets/third_party').data[:rollbar] %>
   scout_token: <%= secret('secrets/third_party').data[:scout] %>
