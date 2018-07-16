@@ -1,3 +1,11 @@
+#### 0.7.2
+
+* fix reading Rails.env
+
+#### 0.7.1
+
+* redeploy while diagnosing gem installation problem
+
 #### 0.7.0
 
 * consult.yml configuration structure has changed, to enable environment specific configuration blocks (see readme for example)
