@@ -65,7 +65,7 @@ module Consult
     end
 
     def env
-      @all_config[:env] || ENV['RAILS_ENV'] || (defined?(::Rails) && ::Rails.root)
+      @all_config[:env] || ENV['RAILS_ENV'] || (defined?(::Rails) && ::Rails.env)
     end
 
     # Return only the templates that are relevant for the current environment
