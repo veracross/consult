@@ -30,6 +30,10 @@ module Consult
       query(*args)&.Nodes&.map { |node| node['Node'] }
     end
 
+    def key(key, options: nil, not_found: :reject, found: :return)
+      Diplomat::Kv.get(key, options, not_found, found)
+    end
+
     ############
     # Utility
     ############
