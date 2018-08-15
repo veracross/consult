@@ -149,6 +149,20 @@ returns
       host: 10.0.100.102
       datacenter: us-east-2
 
+**key(key, options: nil, not_found: :reject, found: :return)** - Return value of the given key
+
+```yml
+'<% key('apps/infrastructure/node/dns') %>':
+<<: *common
+  host: <%= key('apps/infrastructure/node/dns') %>
+  port: 1433
+```
+
+    'db1':
+    <<: *common
+      host: db1
+      port: 1433
+
 #### Vault Functions
 
 **secret(path)** - Fetch a secret at the given path.

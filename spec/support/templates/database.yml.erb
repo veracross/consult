@@ -8,7 +8,7 @@ common: &common
 
 # Begin template
 <% service("postgres").each do |node| %>
-'<%= node.Node %>':
+'<%= key("infrastructure/#{node.Node}/dns") %>':
   <<: *common
   host: <%= node.Address %>
   port: <%= node.ServicePort %>
