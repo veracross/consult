@@ -55,6 +55,10 @@ RSpec.describe Consult::Template do
       expect(template.service('postgres').first.ServicePort).to eq 5432
     end
 
+    it 'can read a consul key' do
+      expect(template.key('infrastructure/db1/dns')).to eq 'db1.local.net'
+    end
+
     it '#with' do
       expect { |b| template.with(0, &b) }.to yield_control
     end
