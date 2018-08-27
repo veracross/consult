@@ -1,14 +1,19 @@
+#### 0.7.3
+
+* Add `key` function to templates to pull kv data from Consul
+* Relax Vault gem dependency to unblock upstream upgrades
+
 #### 0.7.2
 
-* fix reading Rails.env
+* Fix reading Rails.env
 
 #### 0.7.1
 
-* redeploy while diagnosing gem installation problem
+* Redeploy while diagnosing gem installation problem
 
 #### 0.7.0
 
-* consult.yml configuration structure has changed, to enable environment specific configuration blocks (see readme for example)
+* `consult.yml` configuration structure has changed, to enable environment specific configuration blocks (see readme for example)
 * Improve safety around edge cases
 
 #### 0.6.0
