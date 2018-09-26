@@ -56,7 +56,19 @@ module Consult
     private
 
     # Concatenate all the source templates together, in the order provided
+    # Disk contents go first
     def contents
+      disk_contents + consul_contents
+    end
+
+    def consul_contents
+      [@config[:consul_key], @config[:consul_keys]].compact.flatten.map do |key|
+        Diplomat::Kv.get(key, options: nil, not_found: :return, found: :return)
+      end.join
+    end
+
+    # Concatenate all the source templates together, in the order provided
+    def disk_contents
       [path, paths].compact.flatten.map do |file_path|
         File.read file_path, encoding: 'utf-8'
       end.join
