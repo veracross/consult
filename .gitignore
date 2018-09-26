@@ -5,7 +5,7 @@
 /doc/
 /pkg/
 /spec/reports/
-/spec/support/rendered/*.yml
+/spec/support/rendered/*
 /tmp/
 
 # rspec failure tracking
