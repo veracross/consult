@@ -16,11 +16,6 @@ curl \
 
 curl \
     --request PUT \
-    --data 'db1.local.net' \
-    http://0.0.0.0:8500/v1/kv/infrastructure/db1/dns
-
-curl \
-    --request PUT \
     --data $'Earth is the <%= vars[:earth] %>th element\n' \
     http://0.0.0.0:8500/v1/kv/templates/elements/earth
 
