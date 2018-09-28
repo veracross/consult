@@ -19,6 +19,7 @@ module Consult
 
   class << self
     attr_reader :config, :templates
+    attr_writer :exception_handler
 
     def load(config_dir: nil)
       root directory: config_dir
@@ -76,6 +77,10 @@ module Consult
     # Render templates.
     def render!
       active_templates.each(&:render)
+    end
+
+    def exception_handler
+      @exception_handler ||= ->(e) { puts e.message }
     end
 
     # Map more conventional `token` parameter to Diplomat's `acl_token` configuration.

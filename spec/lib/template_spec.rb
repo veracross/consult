@@ -1,5 +1,14 @@
 # frozen_string_literal: true
 
+class Handler
+  class << self
+    attr_reader :error
+    def call(error)
+      @error = error
+    end
+  end
+end
+
 RSpec.describe Consult::Template do
   let(:name) { 'database.yml' }
   let(:config) do
@@ -10,6 +19,14 @@ RSpec.describe Consult::Template do
     }
   end
   let(:template) { Consult::Template.new(name, config) }
+
+  let(:error_template) { 'Corbin Dallas' }
+  let(:error_config) do
+    {
+      consul_key: 'templates/error_test',
+      dest:       'rendered/error_test.txt'
+    }
+  end
 
   before :all do
     Consult.load config_dir: 'spec/support'
@@ -73,6 +90,21 @@ RSpec.describe Consult::Template do
 
       colon_separated = 'hello:world'
       expect(template.indent(colon_separated, 1, ':')).to eq ' hello: world'
+    end
+  end
+
+  context 'error handling' do
+    it 'allows custom error handlers' do
+      Consult.exception_handler = Handler
+      Diplomat::Kv.put('templates/error_test', error_template)
+      template = Consult::Template.new('error_template', error_config)
+      expect(template.render).to eq error_template
+
+      Diplomat::Kv.delete('templates/error_test')
+      expect(template.render).to be nil
+      expect(Handler.error).to be_instance_of Diplomat::KeyNotFound
+
+      expect(File.read(template.dest)).to eq error_template
     end
   end
 end
