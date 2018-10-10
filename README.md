@@ -88,14 +88,20 @@ test:
       dest: config/secrets.yml
 
 production:
-  # example: override vault token in production
-  vault:
-    token: 1397af7aede2-8923-412d-3eb9-8fcd5aed
   templates:
-    # excluded from non-production environments
-    should_be_excluded:
-      path: config/templates/fake.yml
-      dest: config/fake.yml
+    # You can concatenate multiple files together
+    my_config:
+      paths:
+        - config/templates/one.yml
+        - config/templates/two.yml
+      dest: config/my_config.yml
+
+    # Templates can come from Consul
+    your_config:
+      consul_keys:
+        - some/consul/key
+        - another/consul/key
+      dest: config/your_config.txt
 ```
 
 ### Templates

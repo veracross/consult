@@ -1,3 +1,9 @@
+#### 0.8.0
+
+* Add support for multiple sources for a single template ([#14](https://github.com/veracross/consult/pull/14))
+* Add support for Consul-sourced templates ([#15](https://github.com/veracross/consult/pull/15))
+* Don't crash on rendering errors ([#16](https://github.com/veracross/consult/pull/16))
+
 #### 0.7.3
 
 * Add `key` function to templates to pull kv data from Consul
