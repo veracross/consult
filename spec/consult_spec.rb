@@ -23,7 +23,7 @@ RSpec.describe Consult do
     expect { Consult.render! }.to_not raise_exception
 
     # Verify text templates rendered correctly
-    %w[elements.txt more_elements.txt].each do |template|
+    %w[elements.txt more_elements.txt consul_elements.txt more_consul_elements.txt multi_pass.txt].each do |template|
       expect(FileUtils.compare_file("spec/support/expected/#{template}", "spec/support/rendered/#{template}")).to be true
     end
   end
