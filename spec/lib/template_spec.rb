@@ -9,7 +9,15 @@ RSpec.describe Consult::Template do
       ttl: 2
     }
   end
+  let(:fail_config) do
+    {
+      consul_key: 'templates/elements/aziz',
+      dest: 'rendered/nope/dest_fail.keep',
+      vars: {aziz: 'Light!'}
+    }
+  end
   let(:template) { Consult::Template.new(name, config) }
+  let(:fail_template) { Consult::Template.new('aziz', fail_config) }
 
   before :all do
     Consult.load config_dir: 'spec/support'
@@ -39,6 +47,10 @@ RSpec.describe Consult::Template do
     expect(template.expired?).to be(false)
     sleep 2
     expect(template.should_render?).to be(true)
+  end
+
+  it 'outputs render failures to stderr' do
+    expect { fail_template.render }.to output(/Error rendering template*/).to_stderr_from_any_process
   end
 
   context 'template functions' do

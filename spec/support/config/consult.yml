@@ -53,7 +53,7 @@ shared:
         earth: 4
         love: 5
         aziz: 'Light!'
-      
+
     multi_pass:
       path: templates/elements/air.txt
       paths:
@@ -70,6 +70,12 @@ shared:
         water: 3
         earth: 4
         love: 5
+        aziz: 'Light!'
+
+    dest_fail:
+      consul_key: templates/elements/aziz
+      dest: rendered/nope/dest_fail.keep
+      vars:
         aziz: 'Light!'
 
 test:

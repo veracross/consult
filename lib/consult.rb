@@ -19,7 +19,6 @@ module Consult
 
   class << self
     attr_reader :config, :templates
-
     def load(config_dir: nil)
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')

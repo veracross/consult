@@ -15,14 +15,16 @@ module Consult
     end
 
     def render(save: true)
+      # Attempt to render
       renderer = ERB.new(contents, nil, '-')
       result = renderer.result(binding)
 
       File.open(dest, 'w') { |f| f << result } if save
       result
     rescue StandardError => e
-      puts "Error rendering template: #{name}"
-      raise e
+      STDERR.puts "Error rendering template: #{name}"
+      STDERR.puts e
+      nil
     end
 
     def path
