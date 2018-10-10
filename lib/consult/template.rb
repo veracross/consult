@@ -15,7 +15,7 @@ module Consult
     end
 
     def render(save: true)
-      renderer = ERB.new(File.read(path, encoding: 'utf-8'), nil, '-')
+      renderer = ERB.new(contents, nil, '-')
       result = renderer.result(binding)
 
       File.open(dest, 'w') { |f| f << result } if save
@@ -26,7 +26,15 @@ module Consult
     end
 
     def path
-      resolve @config.fetch(:path)
+      resolve @config[:path]
+    end
+
+    def paths
+      @config.fetch(:paths, []).map { |path| resolve(path) }
+    end
+
+    def vars
+      @config[:vars]
     end
 
     def dest
@@ -41,6 +49,15 @@ module Consult
       # Treat renders as expired if a TTL isn't set, or it has never been rendered before
       return true if !config.key?(:ttl) || !dest.exist?
       dest.mtime < (Time.now - @config[:ttl].to_i)
+    end
+
+    private
+
+    # Concatenate all the source templates together, in the order provided
+    def contents
+      [path, paths].compact.flatten.map do |file_path|
+        File.read file_path, encoding: 'utf-8'
+      end.join
     end
   end
 end
