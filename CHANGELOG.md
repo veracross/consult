@@ -1,3 +1,7 @@
+#### 0.8.1
+
+* Obey template location order as specified in consult's config
+
 #### 0.8.0
 
 * Add support for multiple sources for a single template ([#14](https://github.com/veracross/consult/pull/14))
