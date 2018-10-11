@@ -56,10 +56,10 @@ shared:
 
     multi_pass:
       path: templates/elements/air.txt
+      consul_key: templates/elements/earth
       paths:
         - templates/elements/fire.txt
         - templates/elements/water.txt
-      consul_key: templates/elements/earth
       consul_keys:
         - templates/elements/love
         - templates/elements/aziz

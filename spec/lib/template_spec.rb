@@ -53,6 +53,15 @@ RSpec.describe Consult::Template do
     expect { fail_template.render }.to output(/Error rendering template*/).to_stderr_from_any_process
   end
 
+  it 'should obey location order' do
+    size = rand(4) + 1
+    locations = %i[path paths consul_key consul_keys].sample(size).shuffle
+    config = Hash[locations.zip(('a'...'z').to_a.sample(size))]
+
+    template = Consult::Template.new('ordered', config)
+    expect(template.ordered_locations).to eq(locations)
+  end
+
   context 'template functions' do
     it 'can read a secret from vault' do
       expect(template.secret('secret/data/database_credentials').data.dig(:data, :username)).to eq 'kylo.ren'

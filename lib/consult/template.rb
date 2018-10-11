@@ -7,6 +7,8 @@ module Consult
     include Utilities
     include TemplateFunctions
 
+    LOCATIONS = %i[path paths consul_key consul_keys]
+
     attr_reader :name, :config
 
     def initialize(name, config)
@@ -53,23 +55,27 @@ module Consult
       dest.mtime < (Time.now - @config[:ttl].to_i)
     end
 
+    def ordered_locations
+      @config.keys & LOCATIONS
+    end
+
     private
 
     # Concatenate all the source templates together, in the order provided
-    # Disk contents go first
     def contents
-      disk_contents + consul_contents
+      ordered_locations.map do |location|
+        location.to_s.start_with?('consul') ? consul_contents(location) : disk_contents(location)
+      end.join
     end
 
-    def consul_contents
-      [@config[:consul_key], @config[:consul_keys]].compact.flatten.map do |key|
+    def consul_contents(location)
+      [@config[location]].compact.flatten.map do |key|
         Diplomat::Kv.get(key, options: nil, not_found: :return, found: :return)
       end.join
     end
 
-    # Concatenate all the source templates together, in the order provided
-    def disk_contents
-      [path, paths].compact.flatten.map do |file_path|
+    def disk_contents(location)
+      [public_send(location)].compact.flatten.map do |file_path|
         File.read file_path, encoding: 'utf-8'
       end.join
     end
