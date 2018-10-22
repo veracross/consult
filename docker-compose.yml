@@ -1,11 +1,11 @@
 version: '3'
 services:
   consul:
-    image: consul:1.2.3
+    image: consul:1.3.0
     ports:
       - "8500:8500"
   vault:
-    image: vault:0.11.1
+    image: vault:0.11.3
     environment:
       - VAULT_DEV_ROOT_TOKEN_ID=94e1a9ed-5d72-5677-27ab-ebc485cca368
     cap_add:
