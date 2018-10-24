@@ -1,3 +1,7 @@
+#### 0.8.2
+
+* Use `X-Consul-Token` header for Consul authentication. See the [Consul docs](https://www.consul.io/api/index.html#authentication) for details. ([#19](https://github.com/veracross/consult/pull/19))
+
 #### 0.8.1
 
 * Obey template location order as specified in consult's config
