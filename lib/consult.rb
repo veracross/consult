@@ -40,7 +40,9 @@ module Consult
       # Additionally: prefer env vars over explicit config
       configured_address = @config[:consul].delete(:address)
       @config[:consul][:url] = ENV['CONSUL_HTTP_ADDR'] || configured_address || @config[:consul][:url]
-      @config[:consul][:acl_token] = consul_token
+      # If a consul token exists, treat it as special
+      # See https://github.com/WeAreFarmGeek/diplomat/pull/160
+      (@config[:consul][:options] ||= {}).merge!(headers: {'X-Consul-Token' => consul_token}) if consul_token.present?
 
       Diplomat.configure do |c|
         @config[:consul].each do |opt, val|
@@ -82,7 +84,7 @@ module Consult
     def consul_token
       ENV['CONSUL_HTTP_TOKEN'] ||
         @config[:consul].delete(:token) ||
-        @config[:consul][:acl_token] ||
+        @config[:consul].delete(:acl_token) ||
         (CONSUL_DISK_TOKEN.exist? ? CONSUL_DISK_TOKEN.read.chomp : nil)
     end
   end
