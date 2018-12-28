@@ -49,6 +49,12 @@ RSpec.describe Consult::Template do
     expect(template.should_render?).to be(true)
   end
 
+  it 'supports verbose output' do
+    t = Consult::Template.new 'verbose', config.merge(verbose: true)
+    expect(t.verbose?).to be(true)
+    expect { t.render }.to output(/Consult: Rendered verbose/i).to_stdout_from_any_process
+  end
+
   it 'outputs render failures to stderr' do
     expect { fail_template.render }.to output(/Error rendering template*/).to_stderr_from_any_process
   end

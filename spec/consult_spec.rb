@@ -27,4 +27,16 @@ RSpec.describe Consult do
       expect(FileUtils.compare_file("spec/support/expected/#{template}", "spec/support/rendered/#{template}")).to be true
     end
   end
+
+  it 'obeys TTLs' do
+    Consult.load config_dir: directory, force_render: false
+    Consult.render!
+    expect(Consult.active_templates).not_to eq(Consult.templates)
+  end
+
+  it 'can force template rendering' do
+    Consult.load config_dir: directory, force_render: true
+    Consult.render!
+    expect(Consult.active_templates).to eq Consult.templates
+  end
 end

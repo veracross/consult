@@ -18,8 +18,9 @@ module Consult
   CONSUL_DISK_TOKEN = Pathname.new("#{Dir.home}/.consul-token").freeze
 
   class << self
-    attr_reader :config, :templates
-    def load(config_dir: nil)
+    attr_reader :config, :templates, :force_render
+
+    def load(config_dir: nil, force_render: false, verbose: nil)
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
 
@@ -27,7 +28,9 @@ module Consult
       @all_config.deep_symbolize_keys!
 
       @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
-      @templates = @config[:templates]&.map { |name, config| Template.new(name, config) } || []
+      @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge(verbose: verbose)) } || []
+
+      @force_render = force_render
 
       configure_consul
       configure_vault
@@ -71,7 +74,7 @@ module Consult
 
     # Return only the templates that are relevant for the current environment
     def active_templates
-      templates.select(&:should_render?)
+      force_render ? templates : templates.select(&:should_render?)
     end
 
     # Render templates.
