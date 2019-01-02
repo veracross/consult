@@ -22,6 +22,7 @@ module Consult
       result = renderer.result(binding)
 
       File.open(dest, 'w') { |f| f << result } if save
+      puts "Consult: Rendered #{name}" if verbose?
       result
     rescue StandardError => e
       STDERR.puts "Error rendering template: #{name}"
@@ -53,6 +54,10 @@ module Consult
       # Treat renders as expired if a TTL isn't set, or it has never been rendered before
       return true if !config.key?(:ttl) || !dest.exist?
       dest.mtime < (Time.now - @config[:ttl].to_i)
+    end
+
+    def verbose?
+      @config[:verbose]
     end
 
     def ordered_locations

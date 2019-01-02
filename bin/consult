@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/consult/cli'
+
+cli = Consult::CLI.instance
+cli.parse
+cli.render
