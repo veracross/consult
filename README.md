@@ -299,7 +299,7 @@ production:
 Then reference secrets in your app with `Rails.application.secrets`.
 
 ```ruby
-# config/intiializers/rollbar.rb
+# config/initializers/rollbar.rb
 Rollbar.configure do |config|
   config.access_token = Rails.application.secrets.rollbar_token
 end
