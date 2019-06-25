@@ -21,7 +21,7 @@ module Consult
       renderer = ERB.new(contents, nil, '-')
       result = renderer.result(binding)
 
-      File.open(dest, 'w') { |f| f << result } if save
+      File.open(dest, 'wb') { |f| f << result } if save
       puts "Consult: Rendered #{name}" if verbose?
       result
     rescue StandardError => e
