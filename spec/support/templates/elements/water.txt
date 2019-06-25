@@ -1,1 +1,1 @@
-Water is the <%= vars[:water] %>rd element
+Water is the <%= vars[:water] %>rd element 💧

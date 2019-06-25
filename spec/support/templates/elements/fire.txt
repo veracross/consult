@@ -1,1 +1,1 @@
-Fire is the <%= vars[:fire] %>nd element
+Fire is the <%= vars[:fire] %>nd element 🔥
