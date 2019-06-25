@@ -2,10 +2,10 @@ env: test
 
 shared:
   consul:
-    address: http://0.0.0.0:8500
+    address: http://localhost:8500
 
   vault:
-    address: http://0.0.0.0:8200
+    address: http://localhost:8200
     token: 94e1a9ed-5d72-5677-27ab-ebc485cca368
 
   templates:
