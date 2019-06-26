@@ -75,7 +75,7 @@ module Consult
 
     def consul_contents(location)
       [@config[location]].compact.flatten.map do |key|
-        Diplomat::Kv.get(key, options: nil, not_found: :return, found: :return)
+        Diplomat::Kv.get(key, options: nil, not_found: :return, found: :return).force_encoding 'utf-8'
       end.join
     end
 
