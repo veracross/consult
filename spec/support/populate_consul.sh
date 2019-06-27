@@ -16,15 +16,18 @@ curl \
 
 curl \
     --request PUT \
-    --data $'Earth is the <%= vars[:earth] %>th element\n' \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
+    --data $'Earth is the <%= vars[:earth] %>th element 🌎\n' \
     http://localhost:8500/v1/kv/templates/elements/earth
 
 curl \
     --request PUT \
-    --data $'Love is the <%= vars[:love] %>th element!\n' \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
+    --data $'Love is the <%= vars[:love] %>th element! 💗\n' \
     http://localhost:8500/v1/kv/templates/elements/love
 
 curl \
     --request PUT \
-    --data $'Aziz! <%= vars[:aziz] %>\n' \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
+    --data $'Aziz! <%= vars[:aziz] %> 🙄\n' \
     http://localhost:8500/v1/kv/templates/elements/aziz
