@@ -3,7 +3,7 @@
 Generate configuration and secrets for Rails apps automatically from [Consul](https://github.com/hashicorp/consul) & [Vault](https://github.com/hashicorp/vault).
 
 [![Gem Version](https://badge.fury.io/rb/consult.svg)](https://badge.fury.io/rb/consult)
-[![Build Status](https://travis-ci.org/veracross/consult.svg?branch=master)](https://travis-ci.org/veracross/consult)
+[![CircleCI](https://circleci.com/gh/veracross/consult/tree/master.svg?style=svg)](https://circleci.com/gh/veracross/consult/tree/master)
 [![Maintainability](https://api.codeclimate.com/v1/badges/d7b048b7edd9f27c83b9/maintainability)](https://codeclimate.com/github/veracross/consult/maintainability)
 
 ## Background
