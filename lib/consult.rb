@@ -2,7 +2,6 @@
 
 require 'pathname'
 require 'yaml'
-require 'active_support/core_ext/hash'
 require 'erb'
 require 'vault'
 require 'diplomat'
@@ -10,6 +9,7 @@ require 'diplomat'
 require 'consult/version'
 require 'consult/utilities'
 require 'consult/template'
+require_relative './support/hash_extensions'
 
 module Consult
   @config = {}
@@ -45,7 +45,7 @@ module Consult
       @config[:consul][:url] = ENV['CONSUL_HTTP_ADDR'] || configured_address || @config[:consul][:url]
       # If a consul token exists, treat it as special
       # See https://github.com/WeAreFarmGeek/diplomat/pull/160
-      (@config[:consul][:options] ||= {}).merge!(headers: {'X-Consul-Token' => consul_token}) if consul_token.present?
+      (@config[:consul][:options] ||= {}).merge!(headers: {'X-Consul-Token' => consul_token}) if consul_token.to_s.length > 0
 
       Diplomat.configure do |c|
         @config[:consul].each do |opt, val|
