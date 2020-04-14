@@ -14,8 +14,6 @@ We use Consul Template for server level configuration, but application level con
 
 With Consult the process is the same in all environments.
 
-This gem is considered _beta_. At Veracross, we are just beginning to use it in staging environments.
-
 ## Installation
 
 Add this line to your application's Gemfile:
