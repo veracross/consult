@@ -24,8 +24,7 @@ module Consult
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
 
-      @all_config = yaml.exist? ? YAML.safe_load(ERB.new(yaml.read).result, [], [], true).to_h : {}
-      @all_config.deep_symbolize_keys!
+      @all_config = yaml.exist? ? YAML.safe_load(ERB.new(yaml.read).result, [], [], true, symbolize_names: true).to_h : {}
 
       @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
       @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge(verbose: verbose)) } || []
