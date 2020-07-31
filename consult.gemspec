@@ -27,7 +27,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'diplomat', '~> 2.0.2'
   spec.add_dependency 'vault', '>= 0.10.0', '< 1.0.0'
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
   spec.add_development_dependency 'pry-byebug'

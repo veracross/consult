@@ -1,8 +1,7 @@
 version: 2
-jobs:
-  build:
+common_job_config: &common_job_config
     docker:
-      - image: circleci/ruby:2.5.3
+      - image: circleci/ruby:latest
       - image: consul:1.3.0
       - image: vault:0.11.3
         environment:
@@ -61,3 +60,35 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+jobs:
+  ruby_27:
+    <<: *common_job_config
+    docker:
+      - image: circleci/ruby:2.7.0
+      - image: consul:1.3.0
+      - image: vault:0.11.3
+        environment:
+          - VAULT_DEV_ROOT_TOKEN_ID=94e1a9ed-5d72-5677-27ab-ebc485cca368
+  ruby_26:
+    <<: *common_job_config
+    docker:
+      - image: circleci/ruby:2.6.2
+      - image: consul:1.3.0
+      - image: vault:0.11.3
+        environment:
+          - VAULT_DEV_ROOT_TOKEN_ID=94e1a9ed-5d72-5677-27ab-ebc485cca368
+  ruby_25:
+    <<: *common_job_config
+    docker:
+      - image: circleci/ruby:2.5.3
+      - image: consul:1.3.0
+      - image: vault:0.11.3
+        environment:
+          - VAULT_DEV_ROOT_TOKEN_ID=94e1a9ed-5d72-5677-27ab-ebc485cca368
+workflows:
+  version: 2
+  supported_ruby_versions:
+    jobs:
+      - ruby_27
+      - ruby_26
+      - ruby_25
