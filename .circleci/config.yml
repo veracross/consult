@@ -1,8 +1,13 @@
-version: 2
+version: 2.1
+
 jobs:
-  build:
+  test:
+    parameters:
+      ruby_version:
+        type: string
+
     docker:
-      - image: circleci/ruby:2.5.3
+      - image: circleci/ruby:<< parameters.ruby_version >>
       - image: consul:1.3.0
       - image: vault:0.11.3
         environment:
@@ -19,9 +24,9 @@ jobs:
       - restore_cache:
           name: restore gem cache
           keys:
-            - v1-bundle-{{ .Branch }}-{{ checksum "consult.gemspec" }}
-            - v1-bundle-{{ .Branch }}-
-            - v1-bundle-
+            - v1-bundle-<< parameters.ruby_version >>-{{ .Branch }}-{{ checksum "consult.gemspec" }}
+            - v1-bundle-<< parameters.ruby_version >>-{{ .Branch }}-
+            - v1-bundle-<< parameters.ruby_version >>-
 
       - run:
           name: install dependencies
@@ -33,7 +38,7 @@ jobs:
           name: save gem cache
           paths:
             - ./vendor/bundle
-          key: v1-bundle-{{ .Branch }}-{{ checksum "consult.gemspec" }}
+          key: v1-bundle-<< parameters.ruby_version >>-{{ .Branch }}-{{ checksum "consult.gemspec" }}
 
       - run:
           name: setup fixture data
@@ -59,5 +64,15 @@ jobs:
           path: /tmp/test-results
 
       - store_artifacts:
-          path: /tmp/test-results
+          path: /tmp/<< parameters.ruby_version >>/test-results
           destination: test-results
+
+workflows:
+  test_supported_ruby_versions:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              ruby_version:
+                - '2.5'
+                - '2.7'
