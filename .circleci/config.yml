@@ -64,8 +64,8 @@ jobs:
           path: /tmp/test-results
 
       - store_artifacts:
-          path: /tmp/<< parameters.ruby_version >>/test-results
-          destination: test-results
+          path: ./coverage
+          destination: coverage
 
 workflows:
   test_supported_ruby_versions:
