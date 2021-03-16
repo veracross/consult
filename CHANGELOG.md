@@ -1,3 +1,16 @@
+#### Unreleased
+
+#### 0.10.0
+
+* Switch from Travis to CircleCI, and set up testing for multiple Ruby versions ([#25](https://github.com/veracross/consult/pull/25) & [#34](https://github.com/veracross/consult/pull/34))
+* Improve development on Windows ([#21](https://github.com/veracross/consult/pull/21))
+* Normalize string encodings to UTF-8 ([#22](https://github.com/veracross/consult/pull/22))
+* Remove dependency on ActiveSupport ([#27](https://github.com/veracross/consult/pull/27))
+
+#### 0.9.0
+
+* Add a CLI to render templates on demand ([#20](https://github.com/veracross/consult/pull/20))
+
 #### 0.8.2
 
 * Use `X-Consul-Token` header for Consul authentication. See the [Consul docs](https://www.consul.io/api/index.html#authentication) for details. ([#19](https://github.com/veracross/consult/pull/19))
