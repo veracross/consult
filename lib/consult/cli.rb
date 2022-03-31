@@ -15,7 +15,7 @@ module Consult
 
     def parse(args = ARGV)
       @opts = parse_options(args)
-      Consult.load @opts
+      Consult.load **@opts
     end
 
     def render

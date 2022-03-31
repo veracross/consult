@@ -24,7 +24,15 @@ module Consult
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
 
-      @all_config = yaml.exist? ? YAML.safe_load(ERB.new(yaml.read).result, [], [], true, symbolize_names: true).to_h : {}
+      @all_config = if yaml.exist?
+        if Gem::Version.new(YAML::VERSION) < Gem::Version.new('4.0')
+          YAML.safe_load(ERB.new(yaml.read).result, [], [], true, symbolize_names: true).to_h
+        else
+          YAML.safe_load(ERB.new(yaml.read).result, aliases: true, symbolize_names: true).to_h
+        end
+      end
+
+      @all_config ||= {}
 
       @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
       @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge(verbose: verbose)) } || []
