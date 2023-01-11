@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.executables   = ['consult']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'diplomat', '~> 2.6'
+  spec.add_dependency 'diplomat', '~> 2.0.5'
   spec.add_dependency 'vault', '>= 0.10.0', '< 1.0.0'
 
   spec.add_development_dependency 'bundler'
