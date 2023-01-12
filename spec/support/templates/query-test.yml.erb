@@ -1,0 +1,5 @@
+configuration:
+<%- query('postgres-client').Nodes.each do |node|
+  node_name = node.dig('Node', 'Node') -%>
+  node_name: <%= node_name %>
+<%- end -%>

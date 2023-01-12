@@ -1,0 +1,16 @@
+{
+  "Name": "postgres-client",
+  "Service": {
+    "Service": "postgres",
+    "Failover": {
+      "NearestN": 0,
+      "Datacenters": null
+    },
+    "Near": "",
+    "OnlyPassing": false,
+    "Tags": ["primary", "!testing"]
+  },
+  "DNS": {
+    "TTL": ""
+  }
+}

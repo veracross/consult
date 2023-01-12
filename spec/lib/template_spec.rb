@@ -82,6 +82,15 @@ RSpec.describe Consult::Template do
       expect(template.service('postgres').first.ServicePort).to eq 5432
     end
 
+    it 'can execute a query from consul' do
+      expect(template.query('postgres-client')).to be_an(OpenStruct)
+    end
+
+    it 'can get query nodes from consul' do
+      expect(template.query_nodes('postgres-client').length).to eq 1
+      expect(template.query_nodes('postgres-client').dig(0, 'Node')).to eq 'db1'
+    end
+
     it 'can read a consul key' do
       expect(template.key('infrastructure/db1/dns')).to eq 'db1.local.net'
     end

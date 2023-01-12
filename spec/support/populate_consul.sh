@@ -31,3 +31,14 @@ curl \
     -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
     --data $'Aziz! <%= vars[:aziz] %> 🙄\n' \
     http://localhost:8500/v1/kv/templates/elements/aziz
+
+curl \
+    --request PUT \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
+    --data-binary @spec/support/templates/query-test.yml.erb \
+    http://localhost:8500/v1/kv/templates/db/db1
+
+curl \
+    --request POST \
+    --data @spec/support/consul-query.json \
+    http://localhost:8500/v1/query

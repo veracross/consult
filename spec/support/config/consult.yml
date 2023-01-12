@@ -72,6 +72,10 @@ shared:
         love: 5
         aziz: 'Light!'
 
+    query_element:
+      consul_key: templates/db/db1
+      dest: rendered/query_element.yml
+
     dest_fail:
       consul_key: templates/elements/aziz
       dest: rendered/nope/dest_fail.keep
