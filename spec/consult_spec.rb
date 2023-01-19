@@ -19,12 +19,17 @@ RSpec.describe Consult do
     expect(Consult.env).to eq('test')
   end
 
-  it 'renders without error' do
-    expect { Consult.render! }.to_not raise_exception
+  context 'when render the templates' do
+    before { Consult.load config_dir: directory }
 
-    # Verify text templates rendered correctly
-    %w[elements.txt more_elements.txt consul_elements.txt more_consul_elements.txt multi_pass.txt].each do |template|
-      expect(FileUtils.compare_file("spec/support/expected/#{template}", "spec/support/rendered/#{template}")).to be true
+    it 'renders without error' do
+      expect { Consult.render! }.to_not raise_exception
+    end
+
+    it 'renders templates correctly' do
+      %w[elements.txt more_elements.txt consul_elements.txt more_consul_elements.txt multi_pass.txt query_element.yml].each do |template|
+        expect(FileUtils.compare_file("spec/support/expected/#{template}", "spec/support/rendered/#{template}")).to be true
+      end
     end
   end
 

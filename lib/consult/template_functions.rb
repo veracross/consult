@@ -21,7 +21,7 @@ module Consult
     end
 
     # Execute a prepared query
-    def query(name_or_id, options: nil)
+    def query(name_or_id, options: {})
       Diplomat::Query.execute(name_or_id, options)
     end
 
