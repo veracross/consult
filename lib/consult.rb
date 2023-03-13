@@ -100,4 +100,6 @@ module Consult
   end
 end
 
-require 'consult/rails/engine' if defined?(Rails)
+if defined?(Rails) && !%w[1 true].include?(ENV['SKIP_CONSULT'].to_s.downcase)
+  require 'consult/rails/engine'
+end
