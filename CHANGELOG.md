@@ -1,5 +1,11 @@
 #### Unreleased
 
+#### 0.11.0
+
+* Enable support for Ruby 3.1 ([#36](https://github.com/veracross/consult/pull/36))
+* Bump Diplomat version & better testing for default parameters ([#37](https://github.com/veracross/consult/pull/37) & [#39](https://github.com/veracross/consult/pull/39))
+* Avoid loading Railtie if SKIP_CONSULT is truthy ([#40](https://github.com/veracross/consult/pull/40))
+
 #### 0.10.0
 
 * Switch from Travis to CircleCI, and set up testing for multiple Ruby versions ([#25](https://github.com/veracross/consult/pull/25) & [#34](https://github.com/veracross/consult/pull/34))
