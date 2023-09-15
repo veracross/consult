@@ -24,12 +24,18 @@ module Consult
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
 
+      if verbose
+        puts "Consult: Loading config from #{yaml}"
+      end
+
       @all_config = if yaml.exist?
         if Gem::Version.new(YAML::VERSION) < Gem::Version.new('4.0')
           YAML.safe_load(ERB.new(yaml.read).result, [], [], true, symbolize_names: true).to_h
         else
           YAML.safe_load(ERB.new(yaml.read).result, aliases: true, symbolize_names: true).to_h
         end
+      else
+        STDERR.puts "Consult: No config file found at #{root} -> #{yaml}"
       end
 
       @all_config ||= {}

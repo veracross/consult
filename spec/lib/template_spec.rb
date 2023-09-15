@@ -50,9 +50,9 @@ RSpec.describe Consult::Template do
   end
 
   it 'supports verbose output' do
-    t = Consult::Template.new 'verbose', config.merge(verbose: true)
+    t = Consult::Template.new 'verbose-template', config.merge(verbose: true)
     expect(t.verbose?).to be(true)
-    expect { t.render }.to output(/Consult: Rendered verbose/i).to_stdout_from_any_process
+    expect { t.render }.to output(/Consult: Rendering verbose-template.../).to_stdout_from_any_process
   end
 
   it 'outputs render failures to stderr' do
