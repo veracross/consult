@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'template_functions'
+require_relative '../support/hash_extensions'
 
 module Consult
   class Template
@@ -40,7 +41,7 @@ module Consult
     end
 
     def vars
-      @config[:vars]
+      @config[:env_vars].to_h.deep_merge @config[:vars].to_h
     end
 
     def dest
