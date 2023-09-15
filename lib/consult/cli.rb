@@ -41,6 +41,11 @@ module Consult
         o.on '--quiet', FalseClass, 'Silence output' do |arg|
           opts[:verbose] = arg
         end
+
+        o.on '--version', 'Show version' do
+          puts "Consult #{Consult::VERSION}"
+          exit 0
+        end
       end
 
       @parser.on_tail "-h", "--help", "Show help" do
