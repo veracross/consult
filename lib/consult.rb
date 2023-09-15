@@ -41,7 +41,7 @@ module Consult
       @all_config ||= {}
 
       @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
-      @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge(verbose: verbose)) } || []
+      @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge(verbose: verbose).merge(env_vars: @config[:vars])) } || []
 
       @force_render = force_render
 

@@ -83,6 +83,9 @@ shared:
         aziz: 'Light!'
 
 test:
+  vars:
+    test_env_override: some value
+
   templates:
     secrets:
       path: templates/secrets.yml.erb

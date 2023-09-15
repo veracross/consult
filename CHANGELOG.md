@@ -5,6 +5,7 @@
 * Add `--version` option to show the version
 * Better logging for template rendering status, errors, and config (verbose mode)
 * Development: adjust require's to be able to run CLI from any folder
+* Enable defining vars at the env block level, rather than only on template blocks
 
 #### 0.11.0
 
