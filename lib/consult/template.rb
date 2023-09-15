@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'consult/template_functions'
+require_relative 'template_functions'
 
 module Consult
   class Template

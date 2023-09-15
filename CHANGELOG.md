@@ -1,5 +1,7 @@
 #### Unreleased
 
+* Development: adjust require's to be able to run CLI from any folder
+
 #### 0.11.0
 
 * Enable support for Ruby 3.1 ([#36](https://github.com/veracross/consult/pull/36))

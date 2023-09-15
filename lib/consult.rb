@@ -6,9 +6,9 @@ require 'erb'
 require 'vault'
 require 'diplomat'
 
-require 'consult/version'
-require 'consult/utilities'
-require 'consult/template'
+require_relative './consult/version'
+require_relative './consult/utilities'
+require_relative './consult/template'
 require_relative './support/hash_extensions'
 
 module Consult
