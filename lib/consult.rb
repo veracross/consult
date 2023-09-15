@@ -39,6 +39,11 @@ module Consult
 
       @force_render = force_render
 
+      if @templates.empty? && @force_render
+        STDERR.puts "Consult: No template was found for env #{env.inspect} with forced rendering (re-run with `--no-force` if this is acceptable)"
+        exit 1
+      end
+
       configure_consul
       configure_vault
     end

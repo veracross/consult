@@ -1,5 +1,6 @@
 #### Unreleased
 
+* Stop with error when force rendering and no template is found
 * Development: adjust require's to be able to run CLI from any folder
 
 #### 0.11.0
