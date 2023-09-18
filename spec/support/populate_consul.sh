@@ -35,6 +35,12 @@ curl \
 curl \
     --request PUT \
     -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
+    --data $'<%= vars.fetch(:missing) %>\n' \
+    http://localhost:8500/v1/kv/templates/var-missing
+
+curl \
+    --request PUT \
+    -H "Content-Type: application/x-www-form-urlencoded; charset=utf-8" \
     --data-binary @spec/support/templates/query-test.yml.erb \
     http://localhost:8500/v1/kv/templates/db/db1
 

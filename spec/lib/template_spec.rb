@@ -11,9 +11,9 @@ RSpec.describe Consult::Template do
   end
   let(:fail_config) do
     {
-      consul_key: 'templates/elements/aziz',
+      consul_key: 'templates/var-missing',
       dest: 'rendered/nope/dest_fail.keep',
-      vars: {aziz: 'Light!'}
+      vars: {another_var: 'another value'}
     }
   end
   let(:template) { Consult::Template.new(name, config) }
