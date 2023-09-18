@@ -1,5 +1,7 @@
 #### Unreleased
 
+#### 1.0.0
+
 * Stop with error when force rendering and no template is found
 * Remove non-functional short verbosity argument
 * Add `--version` option to show the version
