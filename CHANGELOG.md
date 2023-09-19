@@ -7,6 +7,7 @@
 * Development: adjust require's to be able to run CLI from any folder
 * Enable defining vars at the env block level, rather than only on template blocks
 * Create directories for rendered files as needed
+* Add the `skip_missing_template` config for templates
 
 #### 0.11.0
 

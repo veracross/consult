@@ -16,8 +16,24 @@ RSpec.describe Consult::Template do
       vars: {another_var: 'another value'}
     }
   end
+  let(:missing_template_file_config) do
+    {
+      skip_missing_template: true,
+      path: 'x/y/z.txt',
+      dest: 'rendered/nope/skip_missing_template_file',
+    }
+  end
+  let(:missing_template_key_config) do
+    {
+      skip_missing_template: true,
+      consul_key: 'x/y/z.txt',
+      dest: 'rendered/nope/skip_missing_template_key',
+    }
+  end
   let(:template) { Consult::Template.new(name, config) }
   let(:fail_template) { Consult::Template.new('aziz', fail_config) }
+  let(:missing_template_file) { Consult::Template.new('missing', missing_template_file_config) }
+  let(:missing_template_key) { Consult::Template.new('missing', missing_template_key_config) }
 
   before :all do
     Consult.load config_dir: 'spec/support'
@@ -57,6 +73,20 @@ RSpec.describe Consult::Template do
 
   it 'outputs render failures to stderr' do
     expect { fail_template.render }.to output(/Error rendering template*/).to_stderr_from_any_process
+  end
+
+  context 'skip_missing_template' do
+    it 'allows missing template files' do
+      expect { missing_template_file.render }.to output(/Consult: Skipping missing template: missing/).to_stderr_from_any_process
+      expect(missing_template_file.render).to be_nil
+      expect(File.exist?(missing_template_file.dest)).to be(false)
+    end
+
+    it 'allows missing template keys' do
+      expect { missing_template_key.render }.to output(/Consult: Skipping missing template: missing/).to_stderr_from_any_process
+      expect(missing_template_key.render).to be_nil
+      expect(File.exist?(missing_template_key.dest)).to be(false)
+    end
   end
 
   it 'should obey location order' do
