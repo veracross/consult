@@ -19,6 +19,6 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     puts 'Populating consul & vault...'
-    system '/bin/bash spec/support/populate_consul.sh'
+    system 'sh spec/support/populate_consul.sh'
   end
 end
