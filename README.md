@@ -98,6 +98,13 @@ test:
       vars:
         test_specific_key: and_the_value
 
+    extra_test_config:
+      # normally there's an error for missing templates, but this can be allowed via config
+      skip_missing_template: true
+      # config files are also processed through ERB, so paths can be made dynamic
+      path: config/templates/<%= ENV['extra_test_file'] %>.yml
+      dest: config/extra_test_config.yml
+
 production:
   # vars can be defined at the environment level, which are available to these templates
   vars:

@@ -19,6 +19,10 @@ module Consult
     end
 
     def render(save: true)
+      if contents.empty? && @config[:skip_missing_template]
+        return
+      end
+
       # Attempt to render
       renderer = ERB.new(contents, nil, '-')
       result = renderer.result(binding)
@@ -76,20 +80,34 @@ module Consult
 
     # Concatenate all the source templates together, in the order provided
     def contents
-      ordered_locations.map do |location|
+      @_contents ||= ordered_locations.map do |location|
         location.to_s.start_with?('consul') ? consul_contents(location) : disk_contents(location)
-      end.join
+      end.compact.join
     end
 
     def consul_contents(location)
       [@config[location]].compact.flatten.map do |key|
-        Diplomat::Kv.get(key, {}, :return, :return).force_encoding 'utf-8'
+        Diplomat::Kv.get(key, {}, :reject, :return).force_encoding 'utf-8'
+      rescue Diplomat::KeyNotFound
+        if @config[:skip_missing_template]
+          STDERR.puts "Consult: Skipping missing template: #{name}"
+          next
+        end
+
+        raise
       end.join
     end
 
     def disk_contents(location)
       [public_send(location)].compact.flatten.map do |file_path|
         File.read file_path, encoding: 'utf-8'
+      rescue Errno::ENOENT
+        if @config[:skip_missing_template]
+          STDERR.puts "Consult: Skipping missing template: #{name}"
+          next
+        end
+
+        raise
       end.join
     end
   end
