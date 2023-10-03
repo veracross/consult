@@ -94,8 +94,15 @@ test:
     secrets:
       path: config/templates/secrets.yml
       dest: config/secrets.yml
+      # vars can be defined on a per-template basis
+      vars:
+        test_specific_key: and_the_value
 
 production:
+  # vars can be defined at the environment level, which are available to these templates
+  vars:
+    hello: world
+
   templates:
     # You can concatenate multiple files together
     my_config:

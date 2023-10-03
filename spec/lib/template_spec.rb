@@ -95,6 +95,34 @@ RSpec.describe Consult::Template do
       expect(template.key('infrastructure/db1/dns')).to eq 'db1.local.net'
     end
 
+    describe '#vars' do
+      let(:env_vars) do
+        {
+          env_vars: {
+            'test_env_override' => 'some value from env vars',
+          },
+        }
+      end
+
+      let(:env_vars_and_template_vars) do
+        env_vars.merge({
+          vars: {
+            'test_var_override' => 'some value from template vars',
+          },
+        })
+      end
+
+      it 'can read vars from environment block' do
+        config.merge! env_vars
+        expect(template.vars['test_env_override']).to eq 'some value from env vars'
+      end
+
+      it 'can read vars from vars block' do
+        config.merge! env_vars_and_template_vars
+        expect(template.vars['test_var_override']).to eq 'some value from template vars'
+      end
+    end
+
     it '#with' do
       expect { |b| template.with(0, &b) }.to yield_control
     end
