@@ -38,8 +38,13 @@ module Consult
           opts[:force_render] = arg
         end
 
-        o.on '-v', '--quiet', FalseClass, 'Silence output' do |arg|
+        o.on '--quiet', FalseClass, 'Silence output' do |arg|
           opts[:verbose] = arg
+        end
+
+        o.on '--version', 'Show version' do
+          puts "Consult #{Consult::VERSION}"
+          exit 0
         end
       end
 

@@ -6,9 +6,9 @@ require 'erb'
 require 'vault'
 require 'diplomat'
 
-require 'consult/version'
-require 'consult/utilities'
-require 'consult/template'
+require_relative './consult/version'
+require_relative './consult/utilities'
+require_relative './consult/template'
 require_relative './support/hash_extensions'
 
 module Consult
@@ -24,12 +24,18 @@ module Consult
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
 
+      if verbose
+        puts "Consult: Loading config from #{yaml}"
+      end
+
       @all_config = if yaml.exist?
         if Gem::Version.new(YAML::VERSION) < Gem::Version.new('4.0')
           YAML.safe_load(ERB.new(yaml.read).result, [], [], true, symbolize_names: true).to_h
         else
           YAML.safe_load(ERB.new(yaml.read).result, aliases: true, symbolize_names: true).to_h
         end
+      else
+        STDERR.puts "Consult: No config file found at #{root} -> #{yaml}"
       end
 
       @all_config ||= {}
@@ -38,6 +44,11 @@ module Consult
       @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge(verbose: verbose)) } || []
 
       @force_render = force_render
+
+      if @templates.empty? && @force_render
+        STDERR.puts "Consult: No template was found for env #{env.inspect} with forced rendering (re-run with `--no-force` if this is acceptable)"
+        exit 1
+      end
 
       configure_consul
       configure_vault

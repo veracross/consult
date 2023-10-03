@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'consult/template_functions'
+require_relative 'template_functions'
 
 module Consult
   class Template
@@ -21,12 +21,13 @@ module Consult
       renderer = ERB.new(contents, nil, '-')
       result = renderer.result(binding)
 
+      puts "Consult: Rendering #{name}" + (save ? " to #{dest}" : "...") if verbose?
       File.open(dest, 'wb') { |f| f << result } if save
-      puts "Consult: Rendered #{name}" if verbose?
       result
     rescue StandardError => e
       STDERR.puts "Error rendering template: #{name}"
       STDERR.puts e
+      STDERR.puts e.backtrace if verbose?
       nil
     end
 

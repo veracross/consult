@@ -1,5 +1,11 @@
 #### Unreleased
 
+* Stop with error when force rendering and no template is found
+* Remove non-functional short verbosity argument
+* Add `--version` option to show the version
+* Better logging for template rendering status, errors, and config (verbose mode)
+* Development: adjust require's to be able to run CLI from any folder
+
 #### 0.11.0
 
 * Enable support for Ruby 3.1 ([#36](https://github.com/veracross/consult/pull/36))
