@@ -82,6 +82,11 @@ shared:
       vars:
         aziz: 'Light!'
 
+    missing_template_file:
+      skip_missing_template: true
+      path: x/y/z.txt
+      dest: rendered/nope/skip_missing_template
+
 test:
   vars:
     test_env_override: some value
