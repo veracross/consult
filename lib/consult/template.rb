@@ -2,6 +2,7 @@
 
 require 'fileutils'
 require_relative 'template_functions'
+require_relative 'template_schema'
 require_relative '../support/hash_extensions'
 
 module Consult
@@ -24,7 +25,7 @@ module Consult
       end
 
       # Attempt to render
-      renderer = ERB.new(contents, nil, '-')
+      renderer = ERB.new(contents, trim_mode: '-')
       result = renderer.result(binding)
 
       puts "Consult: Rendering #{name}" + (save ? " to #{dest}" : "...") if verbose?
@@ -74,6 +75,10 @@ module Consult
 
     def ordered_locations
       @config.keys & LOCATIONS
+    end
+
+    def validate
+      @validation = TemplateSchema.new.call(@config)
     end
 
     private
