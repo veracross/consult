@@ -6,6 +6,7 @@
 * Better logging for template rendering status, errors, and config (verbose mode)
 * Development: adjust require's to be able to run CLI from any folder
 * Enable defining vars at the env block level, rather than only on template blocks
+* Create directories for rendered files as needed
 
 #### 0.11.0
 

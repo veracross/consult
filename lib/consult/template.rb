@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'fileutils'
 require_relative 'template_functions'
 require_relative '../support/hash_extensions'
 
@@ -23,7 +24,12 @@ module Consult
       result = renderer.result(binding)
 
       puts "Consult: Rendering #{name}" + (save ? " to #{dest}" : "...") if verbose?
-      File.open(dest, 'wb') { |f| f << result } if save
+
+      if save
+        FileUtils.mkdir_p(dest.dirname) unless dest.dirname.exist?
+        File.open(dest, 'wb') { |f| f << result }
+      end
+
       result
     rescue StandardError => e
       STDERR.puts "Error rendering template: #{name}"
