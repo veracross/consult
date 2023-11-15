@@ -23,9 +23,20 @@ module Consult
         return
       end
 
-      if config.key?(:root)
-        Dir.chdir(Pathname.new(config[:root]).parent)
-      end
+      puts @config[:config_dir].inspect
+      puts Pathname.new(@config[:config_dir]).parent
+
+      puts "before"
+      puts Dir.pwd.inspect
+      puts Dir.entries('.').inspect
+
+      # if @config.key?(:config_dir)
+      #   Dir.chdir(Pathname.new(@config[:config_dir]))
+      # end
+
+      # puts "after"
+      # puts Dir.pwd.inspect
+      # puts Dir.entries('.').inspect
 
       # Attempt to render
       renderer = ERB.new(contents, nil, '-')
@@ -36,6 +47,16 @@ module Consult
       if save
         FileUtils.mkdir_p(dest.dirname) unless dest.dirname.exist?
         File.open(dest, 'wb') { |f| f << result }
+
+        puts "saving..."
+        puts Dir.pwd.inspect
+        puts Dir.entries('.').inspect
+
+        Dir.chdir(dest.dirname) do
+          puts "inside..."
+          puts Dir.pwd.inspect
+          puts Dir.entries('.').inspect
+        end
       end
 
       result

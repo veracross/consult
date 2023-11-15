@@ -40,8 +40,12 @@ module Consult
 
       @all_config ||= {}
 
-      @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
-      @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge({root: root, verbose: verbose, env_vars: @config[:vars]})) } || []
+      @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h.merge({
+        config_dir: config_dir,
+        verbose: verbose,
+        env_vars: @config[:vars],
+      })
+      @templates = @config[:templates]&.map { |name, config| Template.new(name, @config) } || []
 
       @force_render = force_render
 
