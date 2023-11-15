@@ -26,6 +26,7 @@ module Consult
       opts = {
         config_dir: Dir.pwd,
         force_render: true,
+        raise_on_error: false,
         verbose: true
       }
 
@@ -36,6 +37,10 @@ module Consult
 
         o.on '-f', '--[no-]force', TrueClass, 'Ignore template TTLs and force rendering' do |arg|
           opts[:force_render] = arg
+        end
+
+        o.on '--raise-on-error', FalseClass, 'Raise errors instead of printing them' do |arg|
+          opts[:raise_on_error] = arg
         end
 
         o.on '--quiet', FalseClass, 'Silence output' do |arg|
