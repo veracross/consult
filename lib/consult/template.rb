@@ -23,6 +23,10 @@ module Consult
         return
       end
 
+      if config.key?(:root)
+        Dir.chdir(Pathname.new(config[:root]).parent)
+      end
+
       # Attempt to render
       renderer = ERB.new(contents, nil, '-')
       result = renderer.result(binding)
