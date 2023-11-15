@@ -48,6 +48,14 @@ Consult: Rendered my_config
 Consult: Rendered secrets
 ```
 
+The Consult CLI is also available via Docker:
+
+```bash
+$ docker run --rm -v .:/app veracross/consult:latest --directory /app
+```
+
+If your templates reference `localhost` (such as the templates in the `spec` directory of this repo), add `--net host` to the command.
+
 ### Configuration
 
 ```yaml
