@@ -37,6 +37,11 @@ module Consult
       result
     rescue StandardError => e
       STDERR.puts "Error rendering template: #{name}"
+
+      if @config[:raise_on_error]
+        raise e
+      end
+
       STDERR.puts e
       STDERR.puts e.backtrace if verbose?
       nil
