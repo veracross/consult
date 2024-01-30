@@ -24,7 +24,7 @@ module Consult
       end
 
       # Attempt to render
-      renderer = ERB.new(contents, nil, '-')
+      renderer = ERB.new(contents, trim_mode: '-')
       result = renderer.result(binding)
 
       puts "Consult: Rendering #{name}" + (save ? " to #{dest}" : "...") if verbose?
