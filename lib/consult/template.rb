@@ -24,7 +24,11 @@ module Consult
       end
 
       # Attempt to render
-      renderer = ERB.new(contents, nil, '-')
+      renderer = if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.7.0')
+        ERB.new(contents, trim_mode: '-')
+      else
+        ERB.new(contents, nil, '-')
+      end
       result = renderer.result(binding)
 
       puts "Consult: Rendering #{name}" + (save ? " to #{dest}" : "...") if verbose?
