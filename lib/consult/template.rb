@@ -37,6 +37,8 @@ module Consult
       result
     rescue StandardError => e
       STDERR.puts "Error rendering template: #{name}"
+      STDERR.puts "source: #{ordered_locations}"
+      STDERR.puts "destination: #{dest}"
       STDERR.puts e
       STDERR.puts e.backtrace if verbose?
       nil

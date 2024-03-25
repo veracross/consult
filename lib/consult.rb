@@ -40,6 +40,10 @@ module Consult
 
       @all_config ||= {}
 
+      if verbose
+        puts "Consult: env #{env.inspect}"
+      end
+
       @config = @all_config[:shared].to_h.deep_merge @all_config[env&.to_sym].to_h
       @templates = @config[:templates]&.map { |name, config| Template.new(name, config.merge({verbose: verbose, env_vars: @config[:vars]})) } || []
 
