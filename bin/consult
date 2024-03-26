@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/consult/cli'
+require 'bundler/setup'
+require 'consult/cli'
 
 cli = Consult::CLI.instance
 cli.parse

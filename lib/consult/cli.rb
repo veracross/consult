@@ -19,6 +19,7 @@ module Consult
     end
 
     def render
+      Consult.validate_templates
       Consult.render!
     end
 

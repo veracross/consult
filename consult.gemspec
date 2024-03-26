@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'diplomat', '~> 2.6'
   spec.add_dependency 'vault', '>= 0.10.0', '< 1.0.0'
+  spec.add_dependency 'dry-validation', '<= 1.9.0'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'guard'
