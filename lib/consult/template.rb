@@ -2,6 +2,7 @@
 
 require 'fileutils'
 require_relative 'template_functions'
+require_relative 'template_schema'
 require_relative '../support/hash_extensions'
 
 module Consult
@@ -24,7 +25,11 @@ module Consult
       end
 
       # Attempt to render
-      renderer = ERB.new(contents, nil, '-')
+      renderer = if legacy_erb_args?
+        ERB.new(contents, nil, '-')
+      else
+        ERB.new(contents, trim_mode: '-')
+      end
       result = renderer.result(binding)
 
       puts "Consult: Rendering #{name}" + (save ? " to #{dest}" : "...") if verbose?
@@ -76,7 +81,18 @@ module Consult
       @config.keys & LOCATIONS
     end
 
+    def validate
+      @validation = TemplateSchema.new.call(@config)
+    end
+
     private
+
+    def legacy_erb_args?
+      # prior to 2.2.2 ERB.version was a string rather than a Gem::Version-compatible version number, so this will raise an exception
+      Gem::Version.new(ERB.version) < Gem::Version.new('2.2.0')
+    rescue
+      true
+    end
 
     # Concatenate all the source templates together, in the order provided
     def contents

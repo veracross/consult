@@ -100,6 +100,13 @@ module Consult
       active_templates.each(&:render)
     end
 
+    def validate_templates
+      active_templates do |t|
+        t.validate
+        puts "#{t.name}: #{t.validation.errors}"
+      end
+    end
+
     # Map more conventional `token` parameter to Diplomat's `acl_token` configuration.
     # Additionally, we support ~/.consul-token, similar to Vault's support for ~/.vault-token
     def consul_token

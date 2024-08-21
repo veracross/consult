@@ -87,6 +87,9 @@ shared:
       path: x/y/z.txt
       dest: rendered/nope/skip_missing_template
 
+    missing_source:
+      dest: rendered/nowhere.txt
+
 test:
   vars:
     test_env_override: some value
