@@ -5,6 +5,8 @@ require 'yaml'
 require 'erb'
 require 'vault'
 require 'diplomat'
+# https://github.com/WeAreFarmGeek/diplomat/issues/26
+require 'ostruct'
 
 require_relative './consult/version'
 require_relative './consult/utilities'
