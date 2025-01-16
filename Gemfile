@@ -13,5 +13,5 @@ group :development, :test do
   gem 'rake'
   gem 'rspec', '~> 3.0'
   gem 'rspec_junit_formatter', '~> 0.4.1'
-  gem 'simplecov', '~> 0.16.1'
+  gem 'simplecov', '~> 0.22'
 end
