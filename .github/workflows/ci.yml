@@ -1,0 +1,74 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        ruby-version:
+          - '2.7'
+          - '3.0'
+          - '3.1'
+          - '3.2'
+          - '3.3'
+
+    name: test (ruby ${{ matrix.ruby-version }})
+
+    services:
+      consul:
+        image: consul:1.3.0
+        ports:
+          - "8500:8500"
+
+      vault:
+        image: vault:0.11.3
+        ports:
+          - "8200:8200"
+        env:
+          VAULT_DEV_ROOT_TOKEN_ID: 94e1a9ed-5d72-5677-27ab-ebc485cca368
+
+    permissions:
+      contents: read
+      checks: write
+
+    env:
+      LATEST_RUBY_VERSION: '3.3'
+      BUNDLE_ONLY: default test
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-version }}
+          bundler-cache: true
+
+      - run: ./spec/support/populate_consul.sh
+
+      - run: bundle exec rspec
+
+      - uses: joshmfrankel/simplecov-check-action@main
+        if: matrix.ruby-version == env.LATEST_RUBY_VERSION
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          check_job_name: "SimpleCov (ruby ${{ matrix.ruby-version }})"
+          on_fail_status: neutral
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-ruby-${{ matrix.ruby-version }}-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+          path: |
+            coverage/
+          if-no-files-found: ignore
