@@ -22,7 +22,7 @@ module Consult
   class << self
     attr_reader :config, :templates, :force_render
 
-    def load(config_dir: nil, force_render: false, verbose: nil)
+    def load(config_dir: nil, force_render: false, raise_on_error: false, verbose: nil)
       root directory: config_dir
       yaml = root.join('config', 'consult.yml')
 
