@@ -17,6 +17,7 @@ jobs:
     strategy:
       matrix:
         ruby-version:
+          - '2.5'
           - '2.7'
           - '3.0'
           - '3.1'
