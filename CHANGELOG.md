@@ -1,5 +1,7 @@
 #### Unreleased
 
+#### 1.0.0
+
 * Stop with error when force rendering and no template is found
 * Remove non-functional short verbosity argument
 * Add `--version` option to show the version
@@ -8,6 +10,7 @@
 * Enable defining vars at the env block level, rather than only on template blocks
 * Create directories for rendered files as needed
 * Add the `skip_missing_template` config for templates
+* Expand support to from Ruby 2.5 to Ruby 3.3
 
 #### 0.11.0
 
