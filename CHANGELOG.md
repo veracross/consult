@@ -1,5 +1,7 @@
 #### Unreleased
 
+* Raise an error when rendering fails and there's no `dest` file (eg, when the app boots)
+
 #### 1.0.0
 
 * Stop with error when force rendering and no template is found

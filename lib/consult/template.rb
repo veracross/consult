@@ -41,9 +41,12 @@ module Consult
       result
     rescue StandardError => e
       STDERR.puts "Error rendering template: #{name}"
-      STDERR.puts e
-      STDERR.puts e.backtrace if verbose?
-      nil
+      if dest.exist?
+        STDERR.puts e.backtrace if verbose?
+        STDERR.puts e
+      else
+        raise e
+      end
     end
 
     def path

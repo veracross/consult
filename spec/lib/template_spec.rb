@@ -75,6 +75,18 @@ RSpec.describe Consult::Template do
     expect { fail_template.render }.to output(/Error rendering template*/).to_stderr_from_any_process
   end
 
+  it 'raises error for render failures when `dest` file does not exist' do
+    fail_template.dest.delete if fail_template.dest.exist?
+    expect { fail_template.render }.to raise_error(StandardError)
+  end
+
+  it 'logs error and continues for render failures when `dest` file exists' do
+    fail_template.dest.dirname.mkpath unless fail_template.dest.dirname.exist?
+    File.write(fail_template.dest, 'existing content')
+    expect { fail_template.render }.to output(/Error rendering template/).to_stderr_from_any_process
+    expect(fail_template.render).to be_nil
+  end
+
   context 'skip_missing_template' do
     it 'allows missing template files' do
       expect { missing_template_file.render }.to output(/Consult: Skipping missing template: missing/).to_stderr_from_any_process
