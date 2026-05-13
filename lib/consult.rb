@@ -78,6 +78,11 @@ module Consult
       return unless @config.key? :vault
 
       Vault.configure do |c|
+        # Re-read token from disk
+        # Fall back to Vault::Defaults.token when no usable token is explicitly configured
+        configured_token = @config.dig(:vault, :token)
+        c.token = Vault::Defaults.token if configured_token.nil? || configured_token.to_s.empty?
+
         @config[:vault].each do |opt, val|
           c.send "#{opt}=".to_sym, val
         end
