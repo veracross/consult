@@ -68,9 +68,19 @@ jobs:
           check_job_name: "SimpleCov (ruby ${{ matrix.ruby-version }})"
           on_fail_status: neutral
 
+      - name: set artifact name
+        id: artifact-name
+        if: matrix.ruby-version == env.LATEST_RUBY_VERSION
+        shell: bash
+        run: |
+          echo "name=coverage-ruby-${{ matrix.ruby-version }}-${BRANCH_NAME//\//-}-${{ github.sha }}" >> $GITHUB_OUTPUT
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
       - uses: actions/upload-artifact@v4
+        if: matrix.ruby-version == env.LATEST_RUBY_VERSION
         with:
-          name: coverage-ruby-${{ matrix.ruby-version }}-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+          name: ${{ steps.artifact-name.outputs.name }}
           path: |
             coverage/
           if-no-files-found: ignore
