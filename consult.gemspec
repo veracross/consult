@@ -25,5 +25,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'diplomat', '~> 2.6'
+  spec.add_dependency 'json', '< 3.0'
   spec.add_dependency 'vault', '>= 0.10.0', '< 1.0.0'
 end
