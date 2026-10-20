@@ -44,4 +44,32 @@ RSpec.describe Consult do
     Consult.render!
     expect(Consult.active_templates).to eq Consult.templates
   end
+
+  context 'configure_vault token refresh' do
+    before { Consult.load config_dir: directory }
+
+    it 'refreshes the Vault client token from Defaults.token on each call to configure_vault when no token is in config' do
+      # Simulate production consult.yml (no explicit token; vault-agent manages it)
+      Consult.config[:vault].delete(:token)
+
+      allow(Vault::Defaults).to receive(:token).and_return('new-refreshed-token')
+
+      # Reconfigure Vault with the current token from Vault::Defaults
+      Consult.configure_vault
+
+      expect(Vault.client.token).to eq('new-refreshed-token')
+    end
+
+    it 'updates the token on every call to configure_vault when no token is in config' do
+      Consult.config[:vault].delete(:token)
+
+      allow(Vault::Defaults).to receive(:token).and_return('first-token')
+      Consult.configure_vault
+      expect(Vault.client.token).to eq('first-token')
+
+      allow(Vault::Defaults).to receive(:token).and_return('second-token')
+      Consult.configure_vault
+      expect(Vault.client.token).to eq('second-token')
+    end
+  end
 end
